@@ -1,7 +1,12 @@
 # Disaster Response Classification
 
-## Dataset
+## Introduction
+The purpose of this analysis is to develop a machine learning algorithm to
+classify messages to a particular  category or categories.
 
+Model will be developed using Natural Language Processing (NLP) techniques.
+
+## Dataset
 Data was provided by Figure Eight [Figure Eight Wiki](https://en.wikipedia.org/wiki/Figure_Eight_Inc.)
 (formerly known as Dolores Lab, CrowdFlower, acquired by Appen and Five River)
 
@@ -9,13 +14,6 @@ Data consists of messages obtained during disaster scenarios across multiple
 platforms: social media, news, direct messaging.
 
 Total entries: 26,215 entries and 35 categories of disaster.
-
-The purpose of this analysis was to develop a machine learning algorithm which
-could classify a message to a particular disaster(s) category.
-
-The model trained by conducting sentiment analysis on each message and comparing
-it to the classifications given.
-  - Multi-class classification
 
 ## ETL Pipeline
 **Data Quality**
@@ -29,6 +27,10 @@ The final ETL script can be found in process_data.py
 
 ## NLP
 **NLP**
+The model trained by conducting sentiment analysis on each message and comparing
+it to the classifications given.
+  - Multi-class classification
+
 The natural language processing pipeline adopted was:
   - Normalization of text (Lowercase, remove punctuation and urls)
   - Tokenize sentences and then words in sentences.
@@ -54,3 +56,24 @@ results in several categories.
 The web app also displays some visuals on the primary data from Figure Eight.
 
 Web app can be displayed with run.py
+
+## Running The Model
+
+In the terminal cd to directory with cloned repo. Then run the following commands:
+
+Step 1:
+python, Filepaths for Processing Script, message data, category data, database name.
+Example:
+python process_data.py dis_messages.csv dis_cats.csv DisasterResponse.db
+
+Step 2:
+python, filepaths for train_classifier.py, database created in step 1, and
+pkl file where model will be saved.
+Example
+python train_classifier.py DisasterResponse.db classifier.pkl
+
+Step 3:
+**train_classifier.py file is in same directory as run.py**
+python, filepaths for run.py file, database created in step1, model file
+example
+python App/run.py DisasterResponse.db classifier.pkl
