@@ -2,7 +2,7 @@
 
 ## Dataset
 
-Data was provided by Figure Eight[Figure Eight Wiki](https://en.wikipedia.org/wiki/Figure_Eight_Inc.)
+Data was provided by Figure Eight [Figure Eight Wiki](https://en.wikipedia.org/wiki/Figure_Eight_Inc.)
 (formerly known as Dolores Lab, CrowdFlower, acquired by Appen and Five River)
 
 Data consists of messages obtained during disaster scenarios across multiple
