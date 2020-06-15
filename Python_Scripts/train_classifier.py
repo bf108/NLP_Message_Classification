@@ -10,7 +10,7 @@ from nltk.corpus import stopwords
 nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.multioutput import MultiOutputClassifier
@@ -69,15 +69,22 @@ def tokenize(text):
 def build_model():
 
     '''
+    NLP Pipeline and GridSearch to find optimium Transformation params
+
     Args: None
 
-    Returns: NLP Pipeline (Pipline)
+    Returns: NLP Pipeline (Pipeline)
 
     '''
-    # Load from file
-    return Pipeline([('vect', CountVectorizer()),
+
+    parameters = {'vect__max_df': (0.5,1.0),
+                'tfidf__use_idf': (True, False)}
+
+    pipe = Pipeline([('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf',TfidfTransformer()),
         ('clf',MultiOutputClassifier(AdaBoostClassifier()))])
+
+    return GridSearchCV(pipe, param_grid = parameters)
 
 def evaluate_model(model, X_test, Y_test, category_names):
 
@@ -118,6 +125,10 @@ def save_model(model, model_filepath):
 
     '''
     Save model to pkl.file for future use
+
+    Args: Calssification model, full file path to save model
+
+    Returns: None
 
     '''
 
