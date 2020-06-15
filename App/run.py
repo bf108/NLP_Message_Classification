@@ -16,8 +16,8 @@ import sqlite3
 
 app = Flask(__name__)
 
-db_filepath = 'DisasterResponse.db'
-table = db_filepath.split('.db')[0]
+db_filepath = '/Users/benfarrell/Documents/Udacity/DataScience/6_Disaster_Response/Data/DisasterResponse.db'
+table = db_filepath.split('/')[-1].split('.db')[0]
 conn = sqlite3.connect(db_filepath)
 df = pd.read_sql(f'SELECT * FROM {table}',conn)
 
@@ -27,7 +27,7 @@ print(df.head())
 # df = pd.read_sql_table('DisasterResponse', engine)
 
 # load model
-with open("AdaBoost.pkl",'rb') as file:
+with open("../6_Disaster_Response/AdaBoost.pkl",'rb') as file:
     model = pickle.load(file)
 
 # index webpage displays cool visuals and receives user input text for model
