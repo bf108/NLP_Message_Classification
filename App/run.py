@@ -1,3 +1,4 @@
+import sys
 import json
 import plotly
 import pandas as pd
@@ -10,24 +11,26 @@ from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 import plotly.graph_objs as go
-# from sklearn.externals import joblib
 from sqlalchemy import create_engine
 import sqlite3
+from train_classifier import tokenize
 
 app = Flask(__name__)
 
-db_filepath = '/Users/benfarrell/Documents/Udacity/DataScience/6_Disaster_Response/Data/DisasterResponse.db'
+if len(sys.argv[1:]) != 2:
+    sys.exit('Please provide the filepaths of the database and model '\
+          'as the 1st and 2nd argument respectively, '\
+          '\n\nExample: python run.py DisasterResponse.db model.pkl')
+
+db_filepath, model_filepath = sys.argv[1:]
 table = db_filepath.split('/')[-1].split('.db')[0]
 conn = sqlite3.connect(db_filepath)
 df = pd.read_sql(f'SELECT * FROM {table}',conn)
 
 print(df.head())
 
-# engine = create_engine('sqlite:///DisasterResponse.db')
-# df = pd.read_sql_table('DisasterResponse', engine)
-
 # load model
-with open("../6_Disaster_Response/AdaBoost.pkl",'rb') as file:
+with open(model_filepath,'rb') as file:
     model = pickle.load(file)
 
 # index webpage displays cool visuals and receives user input text for model
